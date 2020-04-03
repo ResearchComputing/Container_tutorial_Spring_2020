@@ -5,7 +5,7 @@ Friday, March 17, 2020, 10:00 am - 3:00 pm
 
 ### Location: 
 
-_This course is only offered online_: https://cuboulder.zoom.us/j/699603055  
+_This course is only offered online_: The Zoom number will be emailed to you.
 
 
 ### Instructors 
