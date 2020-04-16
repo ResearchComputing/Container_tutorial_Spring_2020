@@ -1,7 +1,7 @@
 ## Workshop: Containerization with Docker and Singularity
 
 ### Date: 
-Friday, March 17, 2020, 10:00 am - 3:00 pm
+Friday, April 17, 2020, 10:00 am - 3:00 pm
 
 ### Location: 
 
