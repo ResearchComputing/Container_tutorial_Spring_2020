@@ -1,6 +1,6 @@
-## Exercise: Running Containers with Singularity on RMACC Summit
+# Exercise: Running Containers with Singularity on RMACC Summit
 
-### Logging into RMACC Summit
+## Logging into RMACC Summit
 
 #### _Option 1:_ If you are using a temporary account: In a terminal or Git Bash window, type the following:
 ```
@@ -16,48 +16,50 @@ ssh -X monaghaa@login.rc.colorado.edu
 
 ### Getting on a compute node
 
-Navigate to scompile
+#### Navigate to scompile
 ```
 ssh scompile
 ```
 
-Now start an interactive job:
+#### Now start an interactive job:
 ```
 sinteractive -n 2 -t 90 --reservation=container
 ```
 
-Load singularity and set up environment
+#### Load singularity and set up environment
 ```
 module load singularity/3.3.0
 export SINGULARITY_TMPDIR=/scratch/summit/$USER
 export SINGULARITY_CACHEDIR=/scratch/summit/$USER 
 ```
 
-Change to your `/scratch` directory and make a sandbox directory you can experiment in:
+#### Change to your `/scratch` directory and make a sandbox directory you can experiment in:
 ```
 cd /scratch/summit/$USER 
 mkdir sandbox
 cd sandbox
 ```
 
-### Running a container from Singularity Hub
+## Running a container from Singularity Hub
 
- Pull an existing container image that someone else posted:
+#### Pull an existing container image that someone else posted:
 ```
 singularity pull --name mytranslator.sif shub://monaghaa/mytranslator
 ```
 
-…and run it:
+#### …and run it:
 ```
 singularity run mytranslator.sif
 ```
 
- …and look at the script inside the container that is executed when you use `singularity run`:
+#### …and look at the script inside the container that is executed when you use `singularity run`:
 ```
 singularity inspect --runscript mytranslator.sif
 ```
 
-...you'll notice that the runscript calls a script in `/opt` called `text_translate.py`. Let's make an writable _local_ copy of that script in our present working directory and edit it to change the output language from German to French:
+...you'll notice that the runscript calls a script in `/opt` called `text_translate.py`. 
+
+#### Let's make a writable _local_ copy of `text_translate.py` in our present working directory and edit it to change the output language from German to French:
 
 _first, copy the file_
 ```
@@ -73,21 +75,21 @@ singularity exec mytranslator.sif python ./text_translate.py
 ```
 ...so, you used the containerized version of python to run a local version of a python script.
 
-### Running a container from Docker Hub
+## Running a container from Docker Hub
 
- Now let’s grab the stock docker python container:
+#### Now let’s grab the stock docker python container:
 ```
 singularity pull --name pythonmini.sif docker://minidocks/python
 ```
 
- …And run python from it:
+ #### …And run python from it:
 ```
 singularity exec pythonmini.sif python
 ```
 
 …type `exit()` to exit python.
 
-Now shell into the container and look around:
+#### Now shell into the container and look around:
 ```
 singularity shell pythonmini.sif
 ```
@@ -96,58 +98,66 @@ singularity shell pythonmini.sif
  
  ...now exit the container by typing `exit`
 
-Let’s run an external python script using the containerized version of python: 
-First create a script called “myscript.py” as follows:
+#### Let’s run an external python script using the containerized version of python: 
+
+_First create a script called “myscript.py” as follows:_
 ```
 echo 'print("hello world from the outside")' >myscript.py
 ```
 
-…And now let’s run the script using the containerized python
+_…And now let’s run the script using the containerized python_
 ```
 singularity exec pythonmini.sif python ./myscript.py
 ```
 
-…Conclusion: Scripts and data can be kept inside or outside the container. In some instances (e.g., large datasets or scripts that will change frequently) it is easier to containerize the software and keep everything else outside.
+__…Conclusion: Scripts and data can be kept inside or outside the container. In some instances (e.g., large datasets or scripts that will change frequently) it is easier to containerize the software and keep everything else outside.__
 
-### Binding directories to a container
+## Binding directories to a container
 
-On Summit, most host directories are “bound” (mounted) by default. But on other systems, or in some instances on Summit, you may want to access a directory that is not already mounted.
-Let’s try it:
+On Summit, most host directories are “bound” (mounted) by default. But on other systems, or in some instances on Summit, you may want to access a directory that is not already mounted. Let’s try it.
 
-Note that the “/opt” directory in ”pythonmini.sif” is empty. But the Summit ”/opt” directory is not.  Let’s bind it:
+Note that the “/opt” directory in ”pythonmini.sif” is empty. But the Summit ”/opt” directory is not.  
+
+#### Let’s bind it:
 ```
 singularity shell --bind /opt:/opt pythonmini.sif
 ```
 
 Now from within the container type "ls -l /opt" and see if it matches what you see from the outside of the container if you type the same thing. When you are done, type `exit` to get out of the container.
 
- …It isn’t necessary to bind like-named directories like we did above. Try binding your /home/$USER directory to /opt.
+It isn’t necessary to bind like-named directories like we did above... 
+ 
+ #### Try binding your /home/$USER directory to /opt.
 ```
 singularity shell --bind /home/$USER:/opt pythonmini.sif
 ```
 
 Now from within the container type "ls -l $HOME" and see if it matches what you see from the outside of the container if you type the same thing. Type `exit` when done.
 
-_Note: If your host system does not allow binding, you will need to create the host directories you want mounted when you build the container (as root on, e.g., your laptop)
+_Note: If your host system does not allow binding, you will need to create the host directories you want mounted when you build the container (as root on, e.g., your laptop)_
 
-### Running an MPI container
+## Running an MPI container
 
 MPI-enabled Singularity containers can be deployed on RMACC Summit, with the caveat that the MPI software within the container must be consistent with MPI software available on the system. This requirement diminishes the portability of MPI-enabled containers, as they may not run on other systems without compatible MPI software. Regardless, MPI-enabled containers can still be a very useful option in many cases.   
 
-Here we provide an example of that uses a gcc compiler with OpenMPI.  Let’s pull it from Dockerhub first:
+Here we provide an example of that uses a gcc compiler with OpenMPI.  
+
+#### Let’s pull the MPI container from Singularity Hub first:
 
 ```
 singularity pull hello_openmpi.sif shub://monaghaa/hello_openmpi_summit
 ```
 
-In order to use it, we load the gcc and openmpi modules on Summit (the openmpi version is consistent with the openmpi version installed in the container)
+In order to use it, we load the gcc and openmpi modules on Summit (the openmpi version is consistent with the openmpi version installed in the container).
+
+#### Load the gcc and openmpi modules:
 ```	
 export MODULEPATH=/curc/sw/modules/spack/spring2020/linux-rhel7-x86_64/Core:$MODULEPATH
 module load gcc/8.4.0
 module load openmpi/2.1.6
 ```
 
-To run it, simply preface the ‘singularity exec <stuff>’ command with ‘mpirun –n <numprocs>’:
+#### To run it, simply preface the ‘singularity exec <stuff>’ command with ‘mpirun –n <numprocs>’:
 
 ```
 mpirun -n 2 singularity exec hello_openmpi.sif mpi_hello_world
