@@ -57,24 +57,42 @@ singularity run mytranslator.sif
 singularity inspect --runscript mytranslator.sif
 ```
 
+...you'll notice that the runscript calls a script in `/opt` called `text_translate.py`. Let's make an writable _local_ copy of that script in our present working directory and edit it to change the output language from German to French:
+
+_copy the file_
+```
+singularity exec mytranslator.sif cp /opt/text_translate.py .
+```
+_edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done.
+```
+nano text_translate.py
+```
+Now execute your newly modified _local_ copy of the script.
+```
+singularity exec mytranslator.sif python ./text_translate.py
+```
+...so, you used the containerized version of python to run a local version of a python script.
+
 ### Running a container from Docker Hub
 
  Now let’s grab the stock docker python container:
 ```
-singularity pull --name pythond.sif docker://python
+singularity pull --name pythonmini.sif docker://minidocks/python
 ```
 
  …And run python from it:
 ```
-singularity exec pythond.sif python
+singularity exec pythonmini.sif python
 ```
 
 …And shell into the container and look around:
 ```
-singularity shell pythond.sif
+singularity shell pythonmini.sif
 ```
 
  …try `ls /` What directories do you see?:
+ 
+ ...now exit the container by typing `exit`
 
 Let’s run an external python script using the containerized version of python: 
 First create a script called “myscript.py” as follows:
@@ -84,7 +102,7 @@ echo 'print("hello world from the outside")' >myscript.py
 
 …And now let’s run the script using the containerized python
 ```
-singularity exec pythond.sif python ./myscript.py
+singularity exec pythonmini.sif python ./myscript.py
 ```
 
 …Conclusion: Scripts and data can be kept inside or outside the container. In some instances (e.g., large datasets or scripts that will change frequently) it is easier to containerize the software and keep everything else outside.
