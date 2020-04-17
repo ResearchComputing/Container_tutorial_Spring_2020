@@ -57,9 +57,9 @@ singularity run mytranslator.sif
 singularity inspect --runscript mytranslator.sif
 ```
 
-...you'll notice that the runscript calls a script in `/opt` called `text_translate.py`. 
+You'll notice that the runscript calls a script in `/opt` called `text_translate.py`. 
 
-#### Let's make a writable _local_ copy of `text_translate.py` in our present working directory and edit it to change the output language from German to French:
+#### Next, let's make a writable _local_ copy of `text_translate.py` in our present working directory and edit it to change the output language from German to French:
 
 _first, copy the file_
 ```
