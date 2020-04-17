@@ -92,7 +92,7 @@ Now shell into the container and look around:
 singularity shell pythonmini.sif
 ```
 
- …try `ls /` What directories do you see?:
+ …try `ls /`. What directories do you see?:
  
  ...now exit the container by typing `exit`
 
