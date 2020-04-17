@@ -63,7 +63,7 @@ _copy the file_
 ```
 singularity exec mytranslator.sif cp /opt/text_translate.py .
 ```
-_edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done.
+_edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done_
 ```
 nano text_translate.py
 ```
@@ -85,7 +85,9 @@ singularity pull --name pythonmini.sif docker://minidocks/python
 singularity exec pythonmini.sif python
 ```
 
-…And shell into the container and look around:
+…type `exit()` to exit python.
+
+Now shell into the container and look around:
 ```
 singularity shell pythonmini.sif
 ```
@@ -112,20 +114,19 @@ singularity exec pythonmini.sif python ./myscript.py
 On Summit, most host directories are “bound” (mounted) by default. But on other systems, or in some instances on Summit, you may want to access a directory that is not already mounted.
 Let’s try it:
 
-Note that the “/opt” directory in ”pythond.sif” is empty. But the Summit ”/opt” directory is not.  Let’s bind it:
+Note that the “/opt” directory in ”pythonmini.sif” is empty. But the Summit ”/opt” directory is not.  Let’s bind it:
 ```
-singularity shell --bind /opt:/opt pythond.sif
+singularity shell --bind /opt:/opt pythonmini.sif
 ```
 
-Now from within the container type "ls -l /opt" and see if it matches what you see from the outside of the container if you type the same thing.
+Now from within the container type "ls -l /opt" and see if it matches what you see from the outside of the container if you type the same thing. When you are done, type `exit` to get out of the container.
 
  …It isn’t necessary to bind like-named directories like we did above. Try binding your /home/$USER directory to /opt.
 ```
-singularity shell --bind /home/$USER:/opt pythond.sif
+singularity shell --bind /home/$USER:/opt pythonmini.sif
 ```
 
-Now from within the container type "ls -l $HOME" and see if it matches
-what you see from the outside of the container if you type the same thing.
+Now from within the container type "ls -l $HOME" and see if it matches what you see from the outside of the container if you type the same thing. Type `exit` when done.
 
 _Note: If your host system does not allow binding, you will need to create the host directories you want mounted when you build the container (as root on, e.g., your laptop)
 
@@ -139,13 +140,20 @@ Here we provide an example of that uses a gcc compiler with OpenMPI.  Let’s p
 singularity pull hello_openmpi.sif shub://monaghaa/hello_openmpi_summit
 ```
 
-In order to use it, we load the gcc and openmpi modules on Summit (these are consistent with the gcc/openmpi versions installed in the container)
+In order to use it, we load the gcc and openmpi modules on Summit (the openmpi version is consistent with the openmpi version installed in the container)
 ```	
-module load gcc/6.1.0
-module load openmpi/2.0.1
+export MODULEPATH=/curc/sw/modules/spack/spring2020/linux-rhel7-x86_64/Core:$MODULEPATH
+module load gcc/8.4.0
+module load openmpi/2.1.6
 ```
 
 To run it, simply preface the ‘singularity exec <stuff>’ command with ‘mpirun –n <numprocs>’:
 
 ```
 mpirun -n 2 singularity exec hello_openmpi.sif mpi_hello_world
+```
+
+You should see 2 processes, one with rank '0' and the other with '1', indicating that this MPI program is working propery.
+
+Thanks for your attention. That concludes the Singularity tutorial. 
+
