@@ -65,7 +65,7 @@ _first, copy the file_
 ```
 singularity exec mytranslator.sif cp /opt/text_translate.py .
 ```
-_second, edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done_
+_second, edit the file (and change output language to French. You can use the "nano" editor. Type cntl^x to exit and save when done_
 ```
 nano text_translate.py
 ```
