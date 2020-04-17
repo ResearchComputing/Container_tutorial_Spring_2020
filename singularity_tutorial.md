@@ -59,15 +59,15 @@ singularity inspect --runscript mytranslator.sif
 
 ...you'll notice that the runscript calls a script in `/opt` called `text_translate.py`. Let's make an writable _local_ copy of that script in our present working directory and edit it to change the output language from German to French:
 
-_copy the file_
+_first, copy the file_
 ```
 singularity exec mytranslator.sif cp /opt/text_translate.py .
 ```
-_edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done_
+_second, edit the file (and change output language to French_. You can use the "nano" editor. Type cntl^x to exit and save when done_
 ```
 nano text_translate.py
 ```
-Now execute your newly modified _local_ copy of the script.
+_Finally, execute your newly modified _local_ copy of the script._
 ```
 singularity exec mytranslator.sif python ./text_translate.py
 ```
@@ -155,5 +155,5 @@ mpirun -n 2 singularity exec hello_openmpi.sif mpi_hello_world
 
 You should see 2 processes, one with rank '0' and the other with '1', indicating that this MPI program is working propery.
 
-Thanks for your attention. That concludes the Singularity tutorial. 
+That concludes tutorial on running containers with Singularity.  Now return to the [course slides](https://github.com/ResearchComputing/Container_tutorial_Spring_2020/blob/master/Containers-Spring2020.pdf) and we will finish out this mini course with some commentary and demos on building containers with Singularity. 
 
