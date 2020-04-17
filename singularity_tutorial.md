@@ -33,9 +33,11 @@ export SINGULARITY_TMPDIR=/scratch/summit/$USER
 export SINGULARITY_CACHEDIR=/scratch/summit/$USER 
 ```
 
-And change to your `/scratch` directory:
+Change to your `/scratch` directory and make a sandbox directory you can experiment in:
 ```
 cd /scratch/summit/$USER 
+mkdir sandbox
+cd sandbox
 ```
 
 ### Running a container from Singularity Hub
