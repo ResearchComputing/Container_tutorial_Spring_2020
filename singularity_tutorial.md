@@ -157,7 +157,7 @@ module load gcc/8.4.0
 module load openmpi/2.1.6
 ```
 
-#### To run it, simply preface the _`singularity exec <container.sif> <arguments>`_ command with _`mpirun –n <numprocs>`_:
+#### Now run the container. Note that you preface the command with _`mpirun –n <numprocs>`_:
 
 ```
 mpirun -n 2 singularity exec hello_openmpi.sif mpi_hello_world
