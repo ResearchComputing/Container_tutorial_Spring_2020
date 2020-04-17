@@ -47,12 +47,12 @@ cd sandbox
 singularity pull --name mytranslator.sif shub://monaghaa/mytranslator
 ```
 
-#### …and run it:
+#### Now run it:
 ```
 singularity run mytranslator.sif
 ```
 
-#### …and look at the script inside the container that is executed when you use `singularity run`:
+#### Now look at the script inside the container that is executed when you use _`singularity run`_:
 ```
 singularity inspect --runscript mytranslator.sif
 ```
@@ -87,16 +87,16 @@ singularity pull --name pythonmini.sif docker://minidocks/python
 singularity exec pythonmini.sif python
 ```
 
-…type `exit()` to exit python.
+Type `exit()` to exit python.
 
 #### Now shell into the container and look around:
 ```
 singularity shell pythonmini.sif
 ```
 
- …try `ls /`. What directories do you see?:
+Try typing _`ls /`_. What directories do you see?:
  
- ...now exit the container by typing `exit`
+Now exit the container by typing `exit`
 
 #### Let’s run an external python script using the containerized version of python: 
 
@@ -105,12 +105,12 @@ _First create a script called “myscript.py” as follows:_
 echo 'print("hello world from the outside")' >myscript.py
 ```
 
-_…And now let’s run the script using the containerized python_
+_Now let’s run the script using the containerized python_
 ```
 singularity exec pythonmini.sif python ./myscript.py
 ```
 
-__…Conclusion: Scripts and data can be kept inside or outside the container. In some instances (e.g., large datasets or scripts that will change frequently) it is easier to containerize the software and keep everything else outside.__
+__Conclusion: Scripts and data can be kept inside or outside the container. In some instances (e.g., large datasets or scripts that will change frequently) it is easier to containerize the software and keep everything else outside.__
 
 ## Binding directories to a container
 
@@ -157,7 +157,7 @@ module load gcc/8.4.0
 module load openmpi/2.1.6
 ```
 
-#### To run it, simply preface the ‘singularity exec <stuff>’ command with ‘mpirun –n <numprocs>’:
+#### To run it, simply preface the _‘singularity exec’_ command with _‘mpirun –n \<numprocs>’_:
 
 ```
 mpirun -n 2 singularity exec hello_openmpi.sif mpi_hello_world
