@@ -47,12 +47,12 @@ cd sandbox
 singularity pull --name mytranslator.sif shub://monaghaa/mytranslator
 ```
 
-…And run it:
+…and run it:
 ```
 singularity run mytranslator.sif
 ```
 
- …And look at the script inside:
+ …and look at the script inside the container that is executed when you use `singularity run`:
 ```
 singularity inspect --runscript mytranslator.sif
 ```
@@ -67,7 +67,7 @@ _second, edit the file (and change output language to French_. You can use the "
 ```
 nano text_translate.py
 ```
-_Finally, execute your newly modified _local_ copy of the script._
+_Finally, execute your newly modified _local_ copy of the script_
 ```
 singularity exec mytranslator.sif python ./text_translate.py
 ```
