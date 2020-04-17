@@ -73,7 +73,7 @@ _Finally, execute your newly modified _local_ copy of the script_
 ```
 singularity exec mytranslator.sif python ./text_translate.py
 ```
-...so, you used the containerized version of python to run a local version of a python script.
+You just used the containerized version of python to run a local version of a python script.
 
 ## Running a container from Docker Hub
 
